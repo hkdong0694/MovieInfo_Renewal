@@ -19,6 +19,8 @@ class ApiRepository<T> {
     var apiInterface: T?= null
     var interceptor: HttpLoggingInterceptor?= null
 
+    // FIXME : URL 이 다를 경우 처리 해야할 로직 있음..!!
+
     fun initBuild(context: Context, service : Class<T>) : T {
         interceptor = HttpLoggingInterceptor()
         interceptor?.level = HttpLoggingInterceptor.Level.BODY
@@ -32,6 +34,5 @@ class ApiRepository<T> {
         apiInterface = retrofit?.create(service)
         return (apiInterface as T)
     }
-
 
 }
