@@ -18,8 +18,11 @@ class ApiRepository<T> {
     var retrofit: Retrofit?= null
     var apiInterface: T?= null
     var interceptor: HttpLoggingInterceptor?= null
+    var url: String?= null
 
-    // FIXME : URL 이 다를 경우 처리 해야할 로직 있음..!!
+    fun setBaseUrl(url: String) {
+        this.url = url
+    }
 
     fun initBuild(context: Context, service : Class<T>) : T {
         interceptor = HttpLoggingInterceptor()
@@ -29,7 +32,7 @@ class ApiRepository<T> {
         var client = builder.build()
         retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create() )
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(url)
             .client(client).build()
         apiInterface = retrofit?.create(service)
         return (apiInterface as T)
