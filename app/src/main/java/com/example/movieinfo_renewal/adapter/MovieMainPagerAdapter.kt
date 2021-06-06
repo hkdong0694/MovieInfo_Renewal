@@ -11,8 +11,7 @@ import java.util.ArrayList
  * Created by 한경동 (Joel) on 2021/06/06.
  * Description:
  */
-class MovieMainPagerAdapter(fm: FragmentManager) :
-    FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class MovieMainPagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
     // BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT 써줘야함!!
 
     private var fragmentList: MutableList<Fragment> = ArrayList()
@@ -22,7 +21,7 @@ class MovieMainPagerAdapter(fm: FragmentManager) :
 
     override fun getItem(position: Int): Fragment = fragmentList[position]
 
-    override fun getPageTitle(position: Int): CharSequence? {
+    override fun getPageTitle(position: Int): CharSequence {
         return fragmentTitleList[position]
     }
 
