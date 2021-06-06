@@ -13,7 +13,7 @@ interface MovieLikeContract {
     }
 
     interface Presenter {
-
+        fun setView(view: View)
     }
 
 }

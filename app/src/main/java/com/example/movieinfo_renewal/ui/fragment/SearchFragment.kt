@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.ui.contract.SearchContract
+import com.example.movieinfo_renewal.ui.presenter.SearchPresenter
 
 /**
  * A simple [Fragment] subclass.
@@ -15,12 +16,16 @@ import com.example.movieinfo_renewal.ui.contract.SearchContract
  */
 class SearchFragment : Fragment(), SearchContract.View {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private val presenter: SearchPresenter by lazy { SearchPresenter() }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presenter.setView(this)
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }

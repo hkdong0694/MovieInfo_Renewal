@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.ui.contract.MovieListContract
+import com.example.movieinfo_renewal.ui.presenter.MovieListPresenter
 
 /**
  * A simple [Fragment] subclass.
@@ -15,12 +16,16 @@ import com.example.movieinfo_renewal.ui.contract.MovieListContract
  */
 class MovieListFragment : Fragment(), MovieListContract.View {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    private val presetner: MovieListPresenter by lazy { MovieListPresenter() }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        presetner.setView(this)
+        super.onViewCreated(view, savedInstanceState)
     }
 
 }

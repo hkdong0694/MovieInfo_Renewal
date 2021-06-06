@@ -12,4 +12,8 @@ class MovieListPresenter : MovieListContract.Presenter {
 
     private lateinit var view: MovieListContract.View
 
+    override fun setView(view: MovieListContract.View) {
+        this.view = view
+    }
+
 }

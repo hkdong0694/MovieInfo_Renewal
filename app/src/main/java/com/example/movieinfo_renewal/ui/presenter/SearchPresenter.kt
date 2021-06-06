@@ -12,4 +12,8 @@ class SearchPresenter : SearchContract.Presenter {
 
     private lateinit var view: SearchContract.View
 
+    override fun setView(view: SearchContract.View) {
+        this.view = view
+    }
+
 }

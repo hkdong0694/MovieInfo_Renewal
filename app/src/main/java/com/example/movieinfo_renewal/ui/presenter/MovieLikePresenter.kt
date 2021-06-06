@@ -10,6 +10,10 @@ import com.example.movieinfo_renewal.ui.contract.MovieLikeContract
  */
 class MovieLikePresenter : MovieLikeContract.Presenter {
 
-    lateinit var view: MovieLikeContract.View
+    private lateinit var view: MovieLikeContract.View
+
+    override fun setView(view: MovieLikeContract.View) {
+        this.view = view
+    }
 
 }

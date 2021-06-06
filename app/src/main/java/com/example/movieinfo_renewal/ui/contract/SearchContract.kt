@@ -13,6 +13,7 @@ interface SearchContract {
     }
 
     interface Presenter {
+        fun setView( view : View )
 
     }
 
