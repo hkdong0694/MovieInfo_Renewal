@@ -1,6 +1,5 @@
 package com.example.retrofit2_mvp.network.model.dto
 
-import com.example.retrofit2_mvp.network.model.dto.BoxOfficeResult
 import java.io.Serializable
 
 /**
