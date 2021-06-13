@@ -2,6 +2,7 @@ package com.example.movieinfo_renewal.network
 
 import android.content.Context
 import com.example.movieinfo_renewal.network.def.Constants
+import io.reactivex.schedulers.Schedulers.single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -37,5 +38,4 @@ class ApiRepository<T> {
         apiInterface = retrofit?.create(service)
         return (apiInterface as T)
     }
-
 }
