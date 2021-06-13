@@ -20,4 +20,7 @@ object Constants {
     const val MOVIE_DB_URL = "http://api.koreafilm.or.kr"
     const val MOVIE_DB_SERVICE_KEY = "A47D7T5Y5C99GRB77608"
     const val MOVIE_DB_COLLECTION = "kmdb_new"
+
+    const val BOX_OFFICE_URL = "/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"
+
 }

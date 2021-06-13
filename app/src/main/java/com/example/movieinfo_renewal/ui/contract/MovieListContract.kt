@@ -14,6 +14,7 @@ interface MovieListContract {
 
     interface Presenter {
         fun setView(view: View)
+        fun getMovieList()
     }
 
 }

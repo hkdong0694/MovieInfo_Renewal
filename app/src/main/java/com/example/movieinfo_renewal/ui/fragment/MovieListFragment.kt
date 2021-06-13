@@ -16,7 +16,7 @@ import com.example.movieinfo_renewal.ui.presenter.MovieListPresenter
  */
 class MovieListFragment : Fragment(), MovieListContract.View {
 
-    private val presetner: MovieListPresenter by lazy { MovieListPresenter() }
+    private val presenter: MovieListPresenter by lazy { MovieListPresenter(requireActivity()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -24,7 +24,9 @@ class MovieListFragment : Fragment(), MovieListContract.View {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        presetner.setView(this)
+        presenter.setView(this)
+        // 영화 정보 리스트를 뽑아온다.
+        presenter.getMovieList()
         super.onViewCreated(view, savedInstanceState)
     }
 
