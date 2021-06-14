@@ -15,6 +15,7 @@ object Constants {
     const val N_BASE_URL = "https://openapi.naver.com/v1/search/"
     const val CLIENT_ID = "lG13u0c7cEx3hy0QKlul"
     const val CLIENT_SECRET = "0PcQCNqMS1"
+    const val NAVER_SEARCH_DEFAULT = 10
 
     //영화 DB Open Api url, servicekey, collection
     const val MOVIE_DB_URL = "http://api.koreafilm.or.kr"
