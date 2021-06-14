@@ -1,7 +1,6 @@
 package com.example.movieinfo_renewal.ui.presenter
 
 import android.content.Context
-import android.net.ConnectivityManager
 import com.example.movieinfo_renewal.network.NetworkCallback
 import com.example.movieinfo_renewal.network.def.Constants
 import com.example.movieinfo_renewal.network.model.repository.MovieListRepository
@@ -27,21 +26,26 @@ class MovieListPresenter(context1: Context) : MovieListContract.Presenter {
     }
 
     override fun getMovieList() {
-        model.getDailyBox(Constants.KEY, object : NetworkCallback<Result>() {
+        model.getDailyBox("20210613", object : NetworkCallback<Result>() {
             override fun onSuccess(responseBody: Result?) {
-
+                var data = responseBody?.boxOfficeResult?.dailyBoxOfficeList
+                if (data != null) {
+                    view.getMovieListSuccess(data)
+                }
             }
 
             override fun onFailure(code: Int, msg: String?) {
-
+                if (msg != null) {
+                    view.getMovieListFail("$code", msg)
+                }
             }
 
             override fun onThrowable(t: Throwable?) {
-
+                t?.message?.let { view.getMovieListFail("실패", it) }
             }
 
             override fun errorResponse(response: Response<*>?) {
-
+                response?.message()?.let { view.getMovieListFail("${response?.code()}", it) }
             }
 
         })

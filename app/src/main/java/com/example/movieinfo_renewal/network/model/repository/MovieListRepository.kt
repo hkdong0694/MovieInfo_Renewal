@@ -21,6 +21,7 @@ class MovieListRepository(context: Context) {
 
     init {
         repository = ApiRepository()
+        repository?.setBaseUrl(Constants.BASE_URL)
         apiInterface = repository?.initBuild(context, MovieInfoOpenApiService::class.java )
     }
 
