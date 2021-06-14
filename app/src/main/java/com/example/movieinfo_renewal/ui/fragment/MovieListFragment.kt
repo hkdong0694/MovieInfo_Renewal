@@ -73,7 +73,6 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
      * 영화 진흥원 API 성공
      */
     override fun getMovieListSuccess(data: List<DailyBoxOfficeList>) {
-        // adapter?.setData(data as MutableList<DailyBoxOfficeList>)
         data.forEach { i ->
             var datesub = dateSet.substring(0,4)
             listData?.put(i.movieNm.replace(" ", ""), KMovieOfficeItem(i.rank, i.movieNm, i.openDt, i.audiAcc, datesub, datesub, i.rankOldAndNew))

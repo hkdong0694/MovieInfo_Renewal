@@ -9,6 +9,7 @@ import com.example.movieinfo_renewal.network.def.Constants.KEY
 import com.example.movieinfo_renewal.network.def.Constants.NAVER_SEARCH_DEFAULT
 import com.example.movieinfo_renewal.network.model.dto.MovieDetail
 import com.example.movieinfo_renewal.network.model.request.MovieListRequest
+import com.example.movieinfo_renewal.network.model.request.MovieSearchRequest
 import com.example.retrofit2_mvp.network.model.dto.Result
 
 /**
@@ -34,13 +35,16 @@ class MovieListRepository() {
 
     fun getDailyBox(targetDt: String, callback: NetworkCallback<Result>) {
         if( null != repository && null != apiInterface && null != callback ) {
-            var request = MovieListRequest(KEY, targetDt)
+            // var request = MovieListRequest(KEY, targetDt)
+            // apiInterface?.getBoxOffice(request)?.enqueue(callback)
             apiInterface?.getBoxOffice(KEY, targetDt)?.enqueue(callback)
         }
     }
 
     fun getSearchMovieInfo(title: String, yearFrom: Int, yearTo: Int, callback: NetworkCallback<MovieDetail>) {
         if( null != repository && null != apiInterface && null != callback ) {
+            // var request = MovieSearchRequest(title, NAVER_SEARCH_DEFAULT, yearFrom, yearTo)
+            // apiInterface?.getMovies(request)?.enqueue(callback)
             apiInterface?.getMovies(title, NAVER_SEARCH_DEFAULT, yearFrom, yearTo)?.enqueue(callback)
         }
     }
