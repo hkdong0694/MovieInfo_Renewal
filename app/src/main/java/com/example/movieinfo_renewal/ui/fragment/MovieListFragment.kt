@@ -35,7 +35,6 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
     private lateinit var dateSet: String
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
@@ -59,21 +58,33 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
         presenter.getNaverSearch(item.movieNm, dateSet)
     }
 
+    /**
+     * 영화 진흥원 API 성공
+     */
     override fun getMovieListSuccess(data: List<DailyBoxOfficeList>) {
         adapter?.setData(data as MutableList<DailyBoxOfficeList>)
         data.forEach { i -> naverSearch(i) }
         prog.visibility = View.GONE
     }
 
+    /**
+     * 영화 진흥원 API 실패
+     */
     override fun getMovieListFail(code: String, msg: String) {
         Toast.makeText(activity, "$code : $msg", Toast.LENGTH_SHORT).show()
         prog.visibility = View.GONE
     }
 
+    /**
+     * 네이버 검색 API 성공
+     */
     override fun getNaverSearchSuccess(detail: MovieDetail) {
         Log.d("asd", detail.items[0].title)
     }
 
+    /**
+     * 네이버 검색 API 실패
+     */
     override fun getNaverSearchFail(code: String, msg: String) {
         Toast.makeText(activity, "$code : $msg", Toast.LENGTH_SHORT).show()
         prog.visibility = View.GONE

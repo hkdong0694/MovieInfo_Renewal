@@ -12,11 +12,19 @@ import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
 interface MovieListContract {
 
     interface View {
+
+        // 영화 정보 리스트 API 성공
         fun getMovieListSuccess(data: List<DailyBoxOfficeList>)
+
+        // 영화 정보 리스트 API 실패
         fun getMovieListFail(code: String, msg: String)
 
+        // 네이버 영화 검색 API 성공
         fun getNaverSearchSuccess(detail: MovieDetail)
+
+        // 네이버 영화 검색 API 실패
         fun getNaverSearchFail(code: String, msg: String)
+
     }
 
     interface Presenter {
