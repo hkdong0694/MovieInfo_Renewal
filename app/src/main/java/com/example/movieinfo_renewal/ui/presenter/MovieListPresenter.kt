@@ -53,9 +53,8 @@ class MovieListPresenter(context1: Context) : MovieListContract.Presenter {
     }
 
     override fun getNaverSearch(title: String, dateSet: String) {
-        var endYear = dateSet.substring(0, 4)
-        var yearFrom = Integer.parseInt(endYear) - 100
-        var yearTo = Integer.parseInt(endYear)
+        var yearFrom = Integer.parseInt(dateSet) - 100
+        var yearTo = Integer.parseInt(dateSet)
         model.setTypeUrl(context, false)
         model.getSearchMovieInfo(title, yearFrom, yearTo, object : NetworkCallback<MovieDetail>() {
             override fun onSuccess(responseBody: MovieDetail?) {

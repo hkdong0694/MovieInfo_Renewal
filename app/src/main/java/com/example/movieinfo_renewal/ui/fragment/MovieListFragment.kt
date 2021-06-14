@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.adapter.MovieListAdapter
+import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
 import com.example.movieinfo_renewal.network.model.dto.MovieDetail
 import com.example.movieinfo_renewal.ui.activity.MovieDetailActivity
 import com.example.movieinfo_renewal.ui.contract.MovieListContract
@@ -21,6 +22,7 @@ import kotlinx.android.synthetic.main.fragment_movie_list.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.LinkedHashMap
 
 /**
  * A simple [Fragment] subclass.
@@ -33,8 +35,11 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
     private var adapter: MovieListAdapter?= null
     private val cal = Calendar.getInstance()
     private lateinit var dateSet: String
+    private var index = 0
+    private var listData : LinkedHashMap<String, KMovieOfficeItem>?= null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        listData = LinkedHashMap()
         return inflater.inflate(R.layout.fragment_movie_list, container, false)
     }
 
@@ -48,14 +53,20 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
         view.rv_main.layoutManager = LinearLayoutManager(activity)
         view.rv_main.adapter = adapter
         presenter.setView(this)
+        listData?.clear()
         // 영화 정보 리스트를 뽑아온다.
         prog.visibility = View.VISIBLE
         presenter.getMovieList(dateSet)
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onResume() {
+        index = 0
+        super.onResume()
+    }
+
     private fun naverSearch(item: DailyBoxOfficeList) {
-        presenter.getNaverSearch(item.movieNm, dateSet)
+        presenter.getNaverSearch(item.movieNm, dateSet.substring(0,4))
     }
 
     /**
@@ -63,7 +74,11 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
      */
     override fun getMovieListSuccess(data: List<DailyBoxOfficeList>) {
         adapter?.setData(data as MutableList<DailyBoxOfficeList>)
-        data.forEach { i -> naverSearch(i) }
+        data.forEach { i ->
+            var datesub = dateSet.substring(0,4)
+            listData?.put(i.movieNm, KMovieOfficeItem(i.rank, i.movieNm, i.openDt, i.audiAcc, datesub, datesub))
+            naverSearch(i)
+        }
         prog.visibility = View.GONE
     }
 
@@ -79,7 +94,25 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
      * 네이버 검색 API 성공
      */
     override fun getNaverSearchSuccess(detail: MovieDetail) {
-        Log.d("asd", detail.items[0].title)
+        var items = detail.items
+        for( i in 0 until items.size) {
+            val data = items[i]
+            val changeData = data.title.replace(Regex("<b>"), "")
+            val title = changeData.replace(Regex("</b>"), "")
+            val adapterModel = listData?.get(title)
+            if(adapterModel != null) {
+                adapterModel.image = data.image
+                adapterModel.subtitle = data.subtitle
+                adapterModel.link = data.link
+                adapterModel.director = data.director
+                adapterModel.actor = data.actor
+                adapterModel.userRating = data.userRating
+                adapterModel.pubDate = data.pubDate
+                listData?.put(title, adapterModel)
+                index++
+                break
+            }
+        }
     }
 
     /**
@@ -90,7 +123,9 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
         prog.visibility = View.GONE
     }
 
-    // 아이템 Click 시 발생하는 리스너
+    /**
+     * 아이템 Click 시 발생하는 리스너 ( 상세 페이지로 이동 )
+     */
     override fun onItemClick(item: DailyBoxOfficeList) {
         val intent = Intent(activity, MovieDetailActivity::class.java)
         intent.putExtra("data", item)

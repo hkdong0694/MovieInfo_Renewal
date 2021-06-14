@@ -43,32 +43,35 @@
 
         <TextView
             android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:autoSizeTextType="uniform"
             android:maxLines="1"
+            android:ellipsize="end"
             android:text="영화 이름"
-
             android:textColor="#0C0C0C"
             android:textSize="17dp"
             android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageButton"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_openDt"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="2dp"
             android:text="2019-06-09"
             android:textSize="14dp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            android:maxLines="1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageButton"
             app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
         <TextView
             android:id="@+id/tv_director"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="4dp"
@@ -76,7 +79,8 @@
             android:maxLines="1"
             android:text="덩기덕 쿵더러러"
             android:textSize="14dp"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/imageButton"
             app:layout_constraintTop_toBottomOf="@id/tv_openDt" />
 
         <RatingBar
