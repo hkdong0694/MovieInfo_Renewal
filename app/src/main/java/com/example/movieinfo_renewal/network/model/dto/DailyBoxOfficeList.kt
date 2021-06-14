@@ -1,5 +1,7 @@
 package com.example.retrofit2_mvp.network.model.dto
 
+import java.io.Serializable
+
 /**
  * Retrofit2_MVP
  * Class: DailyBoxOfficeList
@@ -45,4 +47,4 @@ data class DailyBoxOfficeList(
     var audiAcc: String,
     var scrnCnt: String,
     var showCnt: String
-)
+) : Serializable

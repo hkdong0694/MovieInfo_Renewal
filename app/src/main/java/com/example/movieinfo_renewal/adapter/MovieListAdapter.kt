@@ -13,14 +13,25 @@ import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
  * Created by 한경동 (Joel) on 2021/06/13.
  * Description:
  */
-class MovieListAdapter : RecyclerView.Adapter<MovieListHolder>() {
+class MovieListAdapter : RecyclerView.Adapter<MovieListHolder>(), MovieListHolder.OnItemClick {
+
+    interface OnItemClickListener {
+        fun onItemClick(item : DailyBoxOfficeList)
+    }
+
+    var itemListener : OnItemClickListener?= null
+
+    fun setItemClickListener(listener: OnItemClickListener) {
+        this.itemListener = listener
+    }
 
     private var movieList = mutableListOf<DailyBoxOfficeList>()
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListHolder = MovieListHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.dailymovie_item, parent, false))
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListHolder {
+        var holder = MovieListHolder(LayoutInflater.from(parent.context).inflate(R.layout.dailymovie_item, parent, false))
+        holder.setItemListener(this)
+        return holder
+    }
     override fun getItemCount(): Int = movieList.size
 
     override fun onBindViewHolder(holder: MovieListHolder, position: Int) = holder.onBind(movieList[position])
@@ -28,6 +39,10 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListHolder>() {
     fun setData(list: MutableList<DailyBoxOfficeList>) {
         this.movieList = list
         notifyDataSetChanged()
+    }
+
+    override fun onItemClick(position: Int) {
+        itemListener?.onItemClick(movieList[position])
     }
 
 

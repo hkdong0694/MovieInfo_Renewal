@@ -2,6 +2,7 @@ package com.example.movieinfo_renewal.adapter.holder
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -16,6 +17,16 @@ import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
  * Description:
  */
 class MovieListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    interface OnItemClick {
+        fun onItemClick(position: Int)
+    }
+
+    var onItemListener: OnItemClick?= null
+
+    fun setItemListener(listener: OnItemClick) {
+        this.onItemListener = listener
+    }
 
     private val vgItem = itemView.findViewById<ViewGroup>(R.id.vg_item)
     private val ivItem = itemView.findViewById<ImageView>(R.id.iv_item)
@@ -52,6 +63,9 @@ class MovieListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         tvOpenDt.text = daily.openDt
         tvDirector.text = daily.movieCd
         tvRating.text = daily.audiCnt
+        vgItem.setOnClickListener {
+            onItemListener?.onItemClick(adapterPosition)
+        }
     }
 
 }
