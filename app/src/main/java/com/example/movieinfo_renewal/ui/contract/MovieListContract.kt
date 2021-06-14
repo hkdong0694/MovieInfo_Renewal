@@ -20,7 +20,7 @@ interface MovieListContract {
         fun getMovieListFail(code: String, msg: String)
 
         // 네이버 영화 검색 API 성공
-        fun getNaverSearchSuccess(detail: MovieDetail)
+        fun getNaverSearchSuccess(title: String, detail: MovieDetail)
 
         // 네이버 영화 검색 API 실패
         fun getNaverSearchFail(code: String, msg: String)

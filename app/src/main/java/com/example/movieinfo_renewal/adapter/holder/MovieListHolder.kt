@@ -7,8 +7,13 @@ import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.movieinfo_renewal.R
+import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
 import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
+import java.text.DecimalFormat
 
 /**
  * MovieInfo_renewal
@@ -57,12 +62,21 @@ class MovieListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     scrnCnt	        문자열	        해당일자에 상영한 스크린수를 출력합니다.
     showCnt	        문자열	        해당일자에 상영된 횟수를 출력합니다.
     */
-    fun onBind(daily: DailyBoxOfficeList) {
-        tvIndex.text = daily.rank
-        tvTitle.text = daily.movieNm
-        tvOpenDt.text = daily.openDt
-        tvDirector.text = daily.movieCd
-        tvRating.text = daily.audiCnt
+    fun onBind(daily: KMovieOfficeItem) {
+        val decimalFormat = DecimalFormat("###,###")
+        if(daily.userRating != "") {
+            val rating = (daily.userRating).toFloat() / 2
+            tvRating.text = daily.userRating
+            rbItem.rating = rating
+        }
+        if(daily.rank != "") tvIndex.text = daily.rank
+        if(daily.movieNm!= "") tvTitle.text = daily.movieNm
+        if(daily.openDt != "" && daily.audiAcc != "")
+            tvOpenDt.text = "${daily.openDt} 개봉 (${decimalFormat.format(Integer.parseInt(daily.audiAcc))}명)"
+        if(daily.image != "") Glide.with(itemView.context).load(daily.image).format(DecodeFormat.PREFER_ARGB_8888).diskCacheStrategy(
+            DiskCacheStrategy.ALL).into(ivItem)
+        if(daily.director != "") tvDirector.text = "${daily.director.replace("|", " ")}감독"
+
         vgItem.setOnClickListener {
             onItemListener?.onItemClick(adapterPosition)
         }

@@ -58,7 +58,7 @@ class MovieListPresenter(context1: Context) : MovieListContract.Presenter {
         model.setTypeUrl(context, false)
         model.getSearchMovieInfo(title, yearFrom, yearTo, object : NetworkCallback<MovieDetail>() {
             override fun onSuccess(responseBody: MovieDetail?) {
-                view.getNaverSearchSuccess(responseBody!!)
+                view.getNaverSearchSuccess(title, responseBody!!)
             }
 
             override fun onFailure(code: Int, msg: String?) {

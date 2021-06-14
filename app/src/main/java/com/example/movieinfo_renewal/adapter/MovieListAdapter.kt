@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.adapter.holder.MovieListHolder
+import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
 import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
 
 /**
@@ -16,7 +17,7 @@ import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
 class MovieListAdapter : RecyclerView.Adapter<MovieListHolder>(), MovieListHolder.OnItemClick {
 
     interface OnItemClickListener {
-        fun onItemClick(item : DailyBoxOfficeList)
+        fun onItemClick(item : KMovieOfficeItem)
     }
 
     var itemListener : OnItemClickListener?= null
@@ -25,7 +26,7 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListHolder>(), MovieListHolde
         this.itemListener = listener
     }
 
-    private var movieList = mutableListOf<DailyBoxOfficeList>()
+    private var movieList = mutableListOf<KMovieOfficeItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieListHolder {
         var holder = MovieListHolder(LayoutInflater.from(parent.context).inflate(R.layout.dailymovie_item, parent, false))
@@ -36,8 +37,11 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListHolder>(), MovieListHolde
 
     override fun onBindViewHolder(holder: MovieListHolder, position: Int) = holder.onBind(movieList[position])
 
-    fun setData(list: MutableList<DailyBoxOfficeList>) {
-        this.movieList = list
+    fun setData(list: KMovieOfficeItem) {
+        movieList.add(list)
+    }
+
+    fun dataNotify() {
         notifyDataSetChanged()
     }
 

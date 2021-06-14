@@ -1,5 +1,7 @@
 package com.example.movieinfo_renewal.network.model.dto
 
+import java.io.Serializable
+
 /**
  * MovieInfo_renewal
  * Class: KMovieOfficeItem
@@ -32,15 +34,17 @@ data class KMovieOfficeItem(
     var endYear: String,
     var pubDate: String,
     var subtitle: String,
-    var check: Boolean
-) {
+    var check: Boolean,
+    var rankOldAndNew: String
+) : Serializable {
     constructor(
         rank: String,
         movieNm: String,
         openDt: String,
         audiAcc: String,
         startYear: String,
-        endYear: String
+        endYear: String,
+        rankOldAndNew: String
     ) : this(
         rank,
         movieNm,
@@ -55,6 +59,7 @@ data class KMovieOfficeItem(
         endYear,
         "",
         "",
-        true
+        true,
+        rankOldAndNew
     )
 }

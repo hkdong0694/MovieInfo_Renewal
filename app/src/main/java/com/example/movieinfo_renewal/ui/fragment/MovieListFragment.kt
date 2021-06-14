@@ -73,13 +73,12 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
      * 영화 진흥원 API 성공
      */
     override fun getMovieListSuccess(data: List<DailyBoxOfficeList>) {
-        adapter?.setData(data as MutableList<DailyBoxOfficeList>)
+        // adapter?.setData(data as MutableList<DailyBoxOfficeList>)
         data.forEach { i ->
             var datesub = dateSet.substring(0,4)
-            listData?.put(i.movieNm, KMovieOfficeItem(i.rank, i.movieNm, i.openDt, i.audiAcc, datesub, datesub))
+            listData?.put(i.movieNm.replace(" ", ""), KMovieOfficeItem(i.rank, i.movieNm, i.openDt, i.audiAcc, datesub, datesub, i.rankOldAndNew))
             naverSearch(i)
         }
-        prog.visibility = View.GONE
     }
 
     /**
@@ -93,14 +92,16 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
     /**
      * 네이버 검색 API 성공
      */
-    override fun getNaverSearchSuccess(detail: MovieDetail) {
+    override fun getNaverSearchSuccess(title1: String, detail: MovieDetail) {
         var items = detail.items
         for( i in 0 until items.size) {
             val data = items[i]
-            val changeData = data.title.replace(Regex("<b>"), "")
-            val title = changeData.replace(Regex("</b>"), "")
+            val regex1 = data.title.replace(Regex("<b>"), "")
+            val regex2 = regex1.replace(Regex("</b>"), "")
+            val title = regex2.replace(" ", "")
             val adapterModel = listData?.get(title)
             if(adapterModel != null) {
+                adapterModel.movieNm = regex2
                 adapterModel.image = data.image
                 adapterModel.subtitle = data.subtitle
                 adapterModel.link = data.link
@@ -109,9 +110,23 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
                 adapterModel.userRating = data.userRating
                 adapterModel.pubDate = data.pubDate
                 listData?.put(title, adapterModel)
-                index++
                 break
             }
+        }
+        index++
+        if(listData?.size == index) {
+            settingAdapterData()
+        }
+    }
+
+    private fun settingAdapterData() {
+        listData?.keys?.apply {
+            for(i in indices) {
+                var data = listData?.get(elementAt(i))
+                if (data != null) adapter?.setData(data)
+            }
+            adapter?.dataNotify()
+            prog.visibility = View.GONE
         }
     }
 
@@ -126,7 +141,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
     /**
      * 아이템 Click 시 발생하는 리스너 ( 상세 페이지로 이동 )
      */
-    override fun onItemClick(item: DailyBoxOfficeList) {
+    override fun onItemClick(item: KMovieOfficeItem) {
         val intent = Intent(activity, MovieDetailActivity::class.java)
         intent.putExtra("data", item)
         startActivity(intent)
