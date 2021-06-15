@@ -31,6 +31,7 @@
         android:textSize="10dp"
         android:paddingStart="5dp"
         android:paddingEnd="5dp"
+        android:fontFamily="@font/noto_b"
         android:text="NEW"
         android:textColor="#ffffff"
         android:visibility="gone"

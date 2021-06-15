@@ -29,7 +29,7 @@ import kotlin.collections.LinkedHashMap
  * Use the [MovieListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.OnItemClickListener {
+class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.View, MovieListAdapter.OnItemClickListener {
 
     private val presenter: MovieListPresenter by lazy { MovieListPresenter(requireActivity()) }
     private var adapter: MovieListAdapter?= null
@@ -51,6 +51,7 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
         cal.add(Calendar.DATE, -1)
         dateSet = df.format(cal.time).toString().replace("-","")
         view.rv_main.layoutManager = LinearLayoutManager(activity)
+        view.fb_date.setOnClickListener(this)
         view.rv_main.adapter = adapter
         presenter.setView(this)
         listData?.clear()
@@ -67,6 +68,12 @@ class MovieListFragment : Fragment(), MovieListContract.View, MovieListAdapter.O
 
     private fun naverSearch(item: DailyBoxOfficeList) {
         presenter.getNaverSearch(item.movieNm, dateSet.substring(0,4))
+    }
+
+
+    override fun onClick(v: View?) {
+        var intent = Intent(activity, MovieDetailActivity::class.java)
+        startActivity(intent)
     }
 
     /**
