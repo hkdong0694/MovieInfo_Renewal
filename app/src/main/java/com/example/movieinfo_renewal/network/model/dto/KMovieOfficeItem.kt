@@ -9,7 +9,7 @@ import java.io.Serializable
  * Description:
  */
 data class KMovieOfficeItem(
-    /*
+/*
     rank	        String	        해당일자의 박스오피스 순위를 출력합니다.
     movieNm	        String	        영화명(국문)을 출력합니다.
     openDt	        String	        영화의 개봉일을 출력합니다.
@@ -19,7 +19,12 @@ data class KMovieOfficeItem(
     director	    String	        검색 결과 영화의 감독이다.
     actor	        String	        검색 결과 영화의 출연 배우이다.
     userRating	    String	        검색 결과 영화에 대한 유저들의 평점이다.
+    startYear       String          검색 영화 시작 연도
+    endYear         String          검색 영화 종료 연도
     pubDate	        String	        영화의 개봉년도를 출력합니다.
+    subtitle        String          영화의 부제목을 출력한다.
+    check           Boolean         ??
+    rankOldAndNew   String          "OLD" or "NEW"
 */
     var rank: String,
     var movieNm: String,

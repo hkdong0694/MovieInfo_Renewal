@@ -24,4 +24,8 @@ object Constants {
 
     const val BOX_OFFICE_URL = "/kobisopenapi/webservice/rest/boxoffice/searchDailyBoxOfficeList.json"
 
+    const val MOVIE_LIST_NEW = "NEW"
+    const val MOVIE_LIST_OLD = "OLD"
+
+
 }
