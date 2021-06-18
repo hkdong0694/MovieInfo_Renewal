@@ -1,5 +1,6 @@
 package com.example.movieinfo_renewal.adapter.holder
 
+import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
