@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -37,6 +38,7 @@ import kotlin.math.max
  */
 class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.View, MovieListAdapter.OnItemClickListener {
 
+    private var tvDate : TextView?= null
     private val presenter: MovieListPresenter by lazy { MovieListPresenter(requireActivity()) }
     private var adapter: MovieListAdapter?= null
     private val cal = Calendar.getInstance()
@@ -51,11 +53,13 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        tvDate = view.findViewById(R.id.tv_date)
         adapter = MovieListAdapter()
         adapter?.setItemClickListener(this)
         cal.time = Date()
         val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         cal.add(Calendar.DATE, -1)
+        tvDate?.text = "영화 순위 (${df.format(cal.time)})"
         dateSet = df.format(cal.time).toString().replace("-","")
         view.rv_main.layoutManager = LinearLayoutManager(activity)
         view.fb_date.setOnClickListener(this)
@@ -74,6 +78,7 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
         listener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
             val cMonth = if( month / 10 == 0 ) "0${month + 1}" else month + 1
             val cDayOhMonth = if( dayOfMonth / 10 == 0) "0$dayOfMonth" else dayOfMonth
+            tvDate?.text = "영화 순위 ($year-$cMonth-$cDayOhMonth)"
             dateSet = "$year$cMonth$cDayOhMonth"
             index = 0
             adapter?.clearData()
@@ -102,14 +107,13 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
                 // 날짜 지정 maxDate 설정
                 maxDate.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH) - 1)
                 Log.d("asd", dateSet)
-                var dateDialog = DatePickerDialog(requireActivity(),
+                DatePickerDialog(requireActivity(),
                     listener,
                     dateSet.substring(0,4).toInt(),
                     dateSet.substring(4,6).toInt(),
-                    dateSet.substring(6,8).toInt())
-                dateDialog.datePicker.maxDate = maxDate.timeInMillis
-                // DatePickerDialog 보여주기
-                dateDialog.show()
+                    dateSet.substring(6,8).toInt()).apply {
+                    this.datePicker.maxDate = maxDate.timeInMillis
+                }.show()
             }
         }
     }
