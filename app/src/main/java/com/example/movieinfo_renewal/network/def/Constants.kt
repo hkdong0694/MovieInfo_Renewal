@@ -27,5 +27,6 @@ object Constants {
     const val MOVIE_LIST_NEW = "NEW"
     const val MOVIE_LIST_OLD = "OLD"
 
+    const val MOVIE_DETAIL = "movieDetail"
 
 }

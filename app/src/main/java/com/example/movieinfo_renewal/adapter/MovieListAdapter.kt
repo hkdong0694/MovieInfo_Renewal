@@ -41,6 +41,10 @@ class MovieListAdapter : RecyclerView.Adapter<MovieListHolder>(), MovieListHolde
         movieList.add(list)
     }
 
+    fun clearData() {
+        movieList = mutableListOf()
+    }
+
     fun dataNotify() {
         notifyDataSetChanged()
     }

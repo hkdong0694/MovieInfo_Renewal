@@ -1,16 +1,21 @@
 package com.example.movieinfo_renewal.ui.fragment
 
+import android.app.DatePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.adapter.MovieListAdapter
+import com.example.movieinfo_renewal.network.def.Constants.MOVIE_DETAIL
 import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
 import com.example.movieinfo_renewal.network.model.dto.MovieDetail
 import com.example.movieinfo_renewal.ui.activity.MovieDetailActivity
@@ -23,6 +28,7 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.LinkedHashMap
+import kotlin.math.max
 
 /**
  * A simple [Fragment] subclass.
@@ -35,6 +41,7 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
     private var adapter: MovieListAdapter?= null
     private val cal = Calendar.getInstance()
     private lateinit var dateSet: String
+    private lateinit var listener: DatePickerDialog.OnDateSetListener
     private var index = 0
     private var listData : LinkedHashMap<String, KMovieOfficeItem>?= null
 
@@ -52,13 +59,28 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
         dateSet = df.format(cal.time).toString().replace("-","")
         view.rv_main.layoutManager = LinearLayoutManager(activity)
         view.fb_date.setOnClickListener(this)
+        view.prog.setOnClickListener(this)
         view.rv_main.adapter = adapter
         presenter.setView(this)
         listData?.clear()
+        initializeListener()
         // 영화 정보 리스트를 뽑아온다.
         prog.visibility = View.VISIBLE
         presenter.getMovieList(dateSet)
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    private fun initializeListener() {
+        listener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            val cMonth = if( month / 10 == 0 ) "0${month + 1}" else month + 1
+            val cDayOhMonth = if( dayOfMonth / 10 == 0) "0$dayOfMonth" else dayOfMonth
+            dateSet = "$year$cMonth$cDayOhMonth"
+            index = 0
+            adapter?.clearData()
+            listData?.clear()
+            prog.visibility = View.VISIBLE
+            presenter.getMovieList(dateSet)
+        }
     }
 
     override fun onResume() {
@@ -70,10 +92,26 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
         presenter.getNaverSearch(item.movieNm, dateSet.substring(0,4))
     }
 
-
     override fun onClick(v: View?) {
-        var intent = Intent(activity, MovieDetailActivity::class.java)
-        startActivity(intent)
+        when(v?.id) {
+            R.id.prog -> {}
+            R.id.fb_date -> {
+                // DatePickerDialog 생성!!
+                val c = Calendar.getInstance()
+                val maxDate = Calendar.getInstance()
+                // 날짜 지정 maxDate 설정
+                maxDate.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH) - 1)
+                Log.d("asd", dateSet)
+                var dateDialog = DatePickerDialog(requireActivity(),
+                    listener,
+                    dateSet.substring(0,4).toInt(),
+                    dateSet.substring(4,6).toInt(),
+                    dateSet.substring(6,8).toInt())
+                dateDialog.datePicker.maxDate = maxDate.timeInMillis
+                // DatePickerDialog 보여주기
+                dateDialog.show()
+            }
+        }
     }
 
     /**
@@ -149,7 +187,7 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
      */
     override fun onItemClick(item: KMovieOfficeItem) {
         val intent = Intent(activity, MovieDetailActivity::class.java)
-        intent.putExtra("data", item)
+        intent.putExtra(MOVIE_DETAIL, item)
         startActivity(intent)
     }
 
