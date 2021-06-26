@@ -2,11 +2,10 @@ package com.example.movieinfo_renewal.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.adapter.MovieMainPagerAdapter
 import com.example.movieinfo_renewal.ui.fragment.MovieLikeFragment
-import com.example.movieinfo_renewal.ui.fragment.MovieListFragment
+import com.example.movieinfo_renewal.ui.fragment.DailyMovieListFragment
 import com.example.movieinfo_renewal.ui.fragment.SearchFragment
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_movie.*
@@ -25,7 +24,7 @@ class MovieActivity : AppCompatActivity() {
         tab_layout.tabGravity = TabLayout.GRAVITY_FILL
 
         adapter = MovieMainPagerAdapter(supportFragmentManager)
-        adapter.addItems(MovieListFragment(), "영화")
+        adapter.addItems(DailyMovieListFragment(), "영화")
         adapter.addItems(SearchFragment(), "검색")
         adapter.addItems(MovieLikeFragment(), "좋아하는 영화")
 

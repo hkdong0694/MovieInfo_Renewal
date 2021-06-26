@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.network.def.Constants
 import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
@@ -80,7 +82,12 @@ class MovieListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
             else tvOpenDt.text = "${daily.openDt} 개봉 (${decimalFormat.format(Integer.parseInt(daily.audiAcc))}명)"
         }
-        if(daily.image != "") Glide.with(itemView.context).load(daily.image).format(DecodeFormat.PREFER_ARGB_8888).into(ivItem)
+        if(daily.image != "")
+            Glide.with(itemView.context)
+            .load(daily.image)
+            .format(DecodeFormat.PREFER_ARGB_8888)
+            .transform(CenterCrop(), RoundedCorners(20))
+            .into(ivItem)
         if(daily.director != "") tvDirector.text = "${daily.director.replace("|", " ")}감독"
         vgItem.setOnClickListener {
             onItemListener?.onItemClick(adapterPosition)

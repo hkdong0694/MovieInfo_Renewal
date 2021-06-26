@@ -2,16 +2,12 @@ package com.example.movieinfo_renewal.ui.fragment
 
 import android.app.DatePickerDialog
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieinfo_renewal.R
@@ -23,20 +19,19 @@ import com.example.movieinfo_renewal.ui.activity.MovieDetailActivity
 import com.example.movieinfo_renewal.ui.contract.MovieListContract
 import com.example.movieinfo_renewal.ui.presenter.MovieListPresenter
 import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
-import kotlinx.android.synthetic.main.fragment_movie_list.*
-import kotlinx.android.synthetic.main.fragment_movie_list.view.*
+import kotlinx.android.synthetic.main.fragment_daily_movie_list.*
+import kotlinx.android.synthetic.main.fragment_daily_movie_list.view.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.LinkedHashMap
-import kotlin.math.max
 
 /**
  * A simple [Fragment] subclass.
- * Use the [MovieListFragment.newInstance] factory method to
+ * Use the [DailyMovieListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.View, MovieListAdapter.OnItemClickListener {
+class DailyMovieListFragment : Fragment(),View.OnClickListener, MovieListContract.View, MovieListAdapter.OnItemClickListener {
 
     private var tvDate : TextView?= null
     private val presenter: MovieListPresenter by lazy { MovieListPresenter(requireActivity()) }
@@ -49,7 +44,7 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         listData = LinkedHashMap()
-        return inflater.inflate(R.layout.fragment_movie_list, container, false)
+        return inflater.inflate(R.layout.fragment_daily_movie_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -106,7 +101,6 @@ class MovieListFragment : Fragment(),View.OnClickListener, MovieListContract.Vie
                 val maxDate = Calendar.getInstance()
                 // 날짜 지정 maxDate 설정
                 maxDate.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH) - 1)
-                Log.d("asd", dateSet)
                 DatePickerDialog(requireActivity(),
                     listener,
                     dateSet.substring(0,4).toInt(),

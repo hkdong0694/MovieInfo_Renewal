@@ -9,15 +9,13 @@
 
     <ImageView
         android:id="@+id/iv_item"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:layout_marginStart="5dp"
-        android:background="@drawable/image_round"
-        android:adjustViewBounds="true"
+        android:background="@drawable/shpae_round_image"
         android:scaleType="centerCrop"
-        android:src="@drawable/movie_3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +41,7 @@
         android:id="@+id/tv_index"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="10dp"
         android:gravity="center"
         android:text="1"
         android:textSize="17dp"
