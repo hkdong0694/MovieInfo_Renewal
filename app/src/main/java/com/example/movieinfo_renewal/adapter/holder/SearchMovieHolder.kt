@@ -12,7 +12,6 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.network.model.dto.MovieItem
-import java.text.DecimalFormat
 
 /**
  * MovieInfo_renewal
@@ -32,7 +31,6 @@ class SearchMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         this.onItemListener = listener
     }
 
-    private val decimalFormat = DecimalFormat("###,###")
     private val vgItem = itemView.findViewById<ViewGroup>(R.id.vg_item)
     private val ivItem = itemView.findViewById<ImageView>(R.id.iv_item)
     private val tvIndex = itemView.findViewById<TextView>(R.id.tv_index)
@@ -63,6 +61,11 @@ class SearchMovieHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .format(DecodeFormat.PREFER_ARGB_8888)
                 .transform(CenterCrop(), RoundedCorners(20))
                 .into(ivItem)
+        else Glide.with(itemView.context)
+            .load(R.drawable.no_image)
+            .format(DecodeFormat.PREFER_ARGB_8888)
+            .transform(CenterCrop(), RoundedCorners(20))
+            .into(ivItem)
         if(item.director != "") tvDirector.text = "${item.director.replace("|", " ")}감독"
         vgItem.setOnClickListener {
             onItemListener?.onItemClick(adapterPosition)
