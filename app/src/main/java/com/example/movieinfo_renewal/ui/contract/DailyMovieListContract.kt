@@ -9,7 +9,7 @@ import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
  * Created by 한경동 (Joel) on 2021/06/06.
  * Description:
  */
-interface MovieListContract {
+interface DailyMovieListContract {
 
     interface View {
 

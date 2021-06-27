@@ -35,7 +35,7 @@ class MovieListRepository() {
 
     fun getDailyBox(targetDt: String, callback: NetworkCallback<Result>) {
         if( null != repository && null != apiInterface && null != callback ) {
-            // var request = MovieListRequest(KEY, targetDt)
+            var request = MovieListRequest(KEY, targetDt)
             // apiInterface?.getBoxOffice(request)?.enqueue(callback)
             apiInterface?.getBoxOffice(KEY, targetDt)?.enqueue(callback)
         }
@@ -43,7 +43,7 @@ class MovieListRepository() {
 
     fun getSearchMovieInfo(title: String, yearFrom: Int, yearTo: Int, callback: NetworkCallback<MovieDetail>) {
         if( null != repository && null != apiInterface && null != callback ) {
-            // var request = MovieSearchRequest(title, NAVER_SEARCH_DEFAULT, yearFrom, yearTo)
+            var request = MovieSearchRequest(title, NAVER_SEARCH_DEFAULT, yearFrom, yearTo)
             // apiInterface?.getMovies(request)?.enqueue(callback)
             apiInterface?.getMovies(title, NAVER_SEARCH_DEFAULT, yearFrom, yearTo)?.enqueue(callback)
         }

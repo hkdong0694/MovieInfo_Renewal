@@ -6,7 +6,7 @@ import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.adapter.MovieMainPagerAdapter
 import com.example.movieinfo_renewal.ui.fragment.MovieLikeFragment
 import com.example.movieinfo_renewal.ui.fragment.DailyMovieListFragment
-import com.example.movieinfo_renewal.ui.fragment.SearchFragment
+import com.example.movieinfo_renewal.ui.fragment.MovieSearchFragment
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.activity_movie.*
 
@@ -25,7 +25,7 @@ class MovieActivity : AppCompatActivity() {
 
         adapter = MovieMainPagerAdapter(supportFragmentManager)
         adapter.addItems(DailyMovieListFragment(), "영화")
-        adapter.addItems(SearchFragment(), "검색")
+        adapter.addItems(MovieSearchFragment(), "검색")
         adapter.addItems(MovieLikeFragment(), "좋아하는 영화")
 
         vp_main.adapter = adapter

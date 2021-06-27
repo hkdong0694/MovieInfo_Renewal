@@ -1,22 +1,18 @@
 package com.example.movieinfo_renewal.adapter.holder
 
-import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
-import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.movieinfo_renewal.R
 import com.example.movieinfo_renewal.network.def.Constants
 import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
-import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
 import java.text.DecimalFormat
 
 /**
@@ -25,7 +21,7 @@ import java.text.DecimalFormat
  * Created by 한경동 (Joel) on 2021/06/13.
  * Description:
  */
-class MovieListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class DailyMovieListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     interface OnItemClick {
         fun onItemClick(position: Int)

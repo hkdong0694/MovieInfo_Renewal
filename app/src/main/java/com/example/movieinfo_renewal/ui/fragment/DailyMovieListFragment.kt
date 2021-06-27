@@ -11,13 +11,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.movieinfo_renewal.R
-import com.example.movieinfo_renewal.adapter.MovieListAdapter
+import com.example.movieinfo_renewal.adapter.DailyMovieListAdapter
 import com.example.movieinfo_renewal.network.def.Constants.MOVIE_DETAIL
 import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
 import com.example.movieinfo_renewal.network.model.dto.MovieDetail
 import com.example.movieinfo_renewal.ui.activity.MovieDetailActivity
-import com.example.movieinfo_renewal.ui.contract.MovieListContract
-import com.example.movieinfo_renewal.ui.presenter.MovieListPresenter
+import com.example.movieinfo_renewal.ui.contract.DailyMovieListContract
+import com.example.movieinfo_renewal.ui.presenter.DailyMovieListPresenter
 import com.example.retrofit2_mvp.network.model.dto.DailyBoxOfficeList
 import kotlinx.android.synthetic.main.fragment_daily_movie_list.*
 import kotlinx.android.synthetic.main.fragment_daily_movie_list.view.*
@@ -31,11 +31,11 @@ import kotlin.collections.LinkedHashMap
  * Use the [DailyMovieListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class DailyMovieListFragment : Fragment(),View.OnClickListener, MovieListContract.View, MovieListAdapter.OnItemClickListener {
+class DailyMovieListFragment : Fragment(),View.OnClickListener, DailyMovieListContract.View, DailyMovieListAdapter.OnItemClickListener {
 
     private var tvDate : TextView?= null
-    private val presenter: MovieListPresenter by lazy { MovieListPresenter(requireActivity()) }
-    private var adapter: MovieListAdapter?= null
+    private val presenterDaily: DailyMovieListPresenter by lazy { DailyMovieListPresenter(requireActivity()) }
+    private var adapterDaily: DailyMovieListAdapter?= null
     private val cal = Calendar.getInstance()
     private lateinit var dateSet: String
     private lateinit var listener: DatePickerDialog.OnDateSetListener
@@ -49,8 +49,8 @@ class DailyMovieListFragment : Fragment(),View.OnClickListener, MovieListContrac
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         tvDate = view.findViewById(R.id.tv_date)
-        adapter = MovieListAdapter()
-        adapter?.setItemClickListener(this)
+        adapterDaily = DailyMovieListAdapter()
+        adapterDaily?.setItemClickListener(this)
         cal.time = Date()
         val df: DateFormat = SimpleDateFormat("yyyy-MM-dd")
         cal.add(Calendar.DATE, -1)
@@ -59,13 +59,13 @@ class DailyMovieListFragment : Fragment(),View.OnClickListener, MovieListContrac
         view.rv_main.layoutManager = LinearLayoutManager(activity)
         view.fb_date.setOnClickListener(this)
         view.prog.setOnClickListener(this)
-        view.rv_main.adapter = adapter
-        presenter.setView(this)
+        view.rv_main.adapter = adapterDaily
+        presenterDaily.setView(this)
         listData?.clear()
         initializeListener()
         // 영화 정보 리스트를 뽑아온다.
         prog.visibility = View.VISIBLE
-        presenter.getMovieList(dateSet)
+        presenterDaily.getMovieList(dateSet)
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -76,10 +76,10 @@ class DailyMovieListFragment : Fragment(),View.OnClickListener, MovieListContrac
             tvDate?.text = "영화 순위 ($year-$cMonth-$cDayOhMonth)"
             dateSet = "$year$cMonth$cDayOhMonth"
             index = 0
-            adapter?.clearData()
+            adapterDaily?.clearData()
             listData?.clear()
             prog.visibility = View.VISIBLE
-            presenter.getMovieList(dateSet)
+            presenterDaily.getMovieList(dateSet)
         }
     }
 
@@ -89,7 +89,7 @@ class DailyMovieListFragment : Fragment(),View.OnClickListener, MovieListContrac
     }
 
     private fun naverSearch(item: DailyBoxOfficeList) {
-        presenter.getNaverSearch(item.movieNm, dateSet.substring(0,4))
+        presenterDaily.getNaverSearch(item.movieNm, dateSet.substring(0,4))
     }
 
     override fun onClick(v: View?) {
@@ -165,9 +165,9 @@ class DailyMovieListFragment : Fragment(),View.OnClickListener, MovieListContrac
         listData?.keys?.apply {
             for(i in indices) {
                 var data = listData?.get(elementAt(i))
-                if (data != null) adapter?.setData(data)
+                if (data != null) adapterDaily?.setData(data)
             }
-            adapter?.dataNotify()
+            adapterDaily?.dataNotify()
             prog.visibility = View.GONE
         }
     }

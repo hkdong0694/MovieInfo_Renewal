@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.movieinfo_renewal.network.NetworkCallback
 import com.example.movieinfo_renewal.network.model.dto.MovieDetail
 import com.example.movieinfo_renewal.network.model.repository.MovieListRepository
-import com.example.movieinfo_renewal.ui.contract.MovieListContract
+import com.example.movieinfo_renewal.ui.contract.DailyMovieListContract
 import com.example.retrofit2_mvp.network.model.dto.Result
 import retrofit2.Response
 
@@ -14,13 +14,13 @@ import retrofit2.Response
  * Created by 한경동 (Joel) on 2021/06/06.
  * Description:
  */
-class MovieListPresenter(context1: Context) : MovieListContract.Presenter {
+class DailyMovieListPresenter(context1: Context) : DailyMovieListContract.Presenter {
 
     private var context: Context = context1
-    private lateinit var view: MovieListContract.View
+    private lateinit var view: DailyMovieListContract.View
     private lateinit var model : MovieListRepository
 
-    override fun setView(view: MovieListContract.View) {
+    override fun setView(view: DailyMovieListContract.View) {
         this.view = view
         model = MovieListRepository()
     }
