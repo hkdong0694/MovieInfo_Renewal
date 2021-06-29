@@ -34,7 +34,7 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieHolder>(), SearchMovi
     }
 
     override fun onBindViewHolder(holder: SearchMovieHolder, position: Int) {
-        holder.onBind(searchList.get(position))
+        holder.onBind(searchList[position])
     }
 
     override fun getItemCount(): Int = searchList.size
@@ -45,7 +45,7 @@ class SearchMovieAdapter : RecyclerView.Adapter<SearchMovieHolder>(), SearchMovi
     }
 
     override fun onItemClick(position: Int) {
-        itemListener?.onItemClick(searchList.get(position))
+        itemListener?.onItemClick(searchList[position])
     }
 
 
