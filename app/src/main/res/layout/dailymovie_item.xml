@@ -65,11 +65,11 @@
             android:layout_marginBottom="2dp"
             android:autoSizeTextType="uniform"
             android:maxLines="1"
+            android:fontFamily="@font/noto_b"
             android:ellipsize="end"
             android:text="영화 이름"
             android:textColor="#0C0C0C"
             android:textSize="17dp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/imageButton"
             app:layout_constraintTop_toTopOf="parent" />

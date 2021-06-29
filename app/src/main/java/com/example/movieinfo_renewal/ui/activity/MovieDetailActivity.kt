@@ -12,11 +12,11 @@ import com.example.movieinfo_renewal.network.def.Constants
 import com.example.movieinfo_renewal.network.model.dto.KMovieOfficeItem
 import com.example.movieinfo_renewal.ui.contract.MovieDetailContract
 import com.example.movieinfo_renewal.ui.presenter.MovieDetailPresenter
+import kotlinx.android.synthetic.main.activity_movie_detail.*
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
 
     private lateinit var movieDetail : KMovieOfficeItem
-    private lateinit var ivThumbnail : ImageView
 
     private val presenter: MovieDetailPresenter by lazy { MovieDetailPresenter(this) }
 
@@ -30,10 +30,11 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailContract.View {
     }
 
     private fun initDataView() {
-        ivThumbnail = findViewById( R.id.iv_thumbnail )
         Glide.with(this).load(movieDetail.image)
             .format(DecodeFormat.PREFER_ARGB_8888)
-            .transform(CenterCrop(), RoundedCorners(20))
-            .into(ivThumbnail)
+            .transform(CenterCrop(), RoundedCorners(25))
+            .into(iv_thumbnail)
+        tv_title.text = movieDetail.movieNm
+        tv_e_title.text = "( ${movieDetail.subtitle} )"
     }
 }
