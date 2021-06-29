@@ -10,4 +10,4 @@ MovieInfo Java 버전을 Kotlin 변환 + MVP Design Pattern 적용하여 Renewal
 ### 2021/06/17 -> Floating Button 달력 Fragment 
 ### 2021/06/26 -> DatePickerDialog 날짜 선택 후 MovieList Refresh() 적용, Toolbar 적용
 ### 2021/06/27 -> 영화 검색 Tab Fragment 화면 완성, 공통 에러뷰 xml 정의
-### 2021/06/28 -> 영화 상세 화면 Setting
+### 2021/06/28 -> 영화 상세 화면 Setting, Youtube Player Library 추가
