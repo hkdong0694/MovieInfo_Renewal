@@ -11,4 +11,4 @@ MovieInfo Java 버전을 Kotlin 변환 + MVP Design Pattern + ROOM 적용하여 
 ### 2021/06/26 -> DatePickerDialog 날짜 선택 후 MovieList Refresh() 적용, Toolbar 적용
 ### 2021/06/27 -> 영화 검색 Tab Fragment 화면 완성, 공통 에러뷰 xml 정의
 ### 2021/06/28 -> 영화 상세 화면 Setting, Youtube Player Library 추가  
-### 2021/07월 - 프로젝트가 너무 바빠서 진행 못함 ㅠㅠ
+### 2021/07/01 ~ 2021/08/13 - 프로젝트가 너무 바빠서 진행 못함 ㅠㅠ
